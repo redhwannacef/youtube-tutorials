@@ -1,0 +1,16 @@
+plugins {
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation('org.thymeleaf:thymeleaf:3.0.11.RELEASE')
+    implementation('org.apache.xmlgraphics:fop:2.3')
+
+    testImplementation('org.assertj:assertj-core:3.14.0')
+    testImplementation('junit:junit:4.12')
+    testImplementation('org.apache.pdfbox:pdfbox:2.0.19')
+}

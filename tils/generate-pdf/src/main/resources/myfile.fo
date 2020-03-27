@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format">
+    <fo:layout-master-set>
+        <!-- Page Layout -->
+        <fo:simple-page-master master-name="A4" page-height="297mm" page-width="210mm"
+                               margin="15mm">
+            <fo:region-body/>
+        </fo:simple-page-master>
+    </fo:layout-master-set>
+
+    <fo:page-sequence master-reference="A4" th:each="pageNumber : ${model.pages}">
+        <fo:flow flow-name="xsl-region-body">
+            <fo:block font-size="24pt" th:text="${model.title}"/>
+            <fo:block th:text="${'Page-' + pageNumber}"/>
+        </fo:flow>
+    </fo:page-sequence>
+
+</fo:root>
