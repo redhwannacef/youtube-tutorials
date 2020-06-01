@@ -1,0 +1,38 @@
+.nav {
+  height: 100px;
+  border-bottom: 1px solid lightgrey;
+  display: flex;
+  justify-content: space-around;
+}
+
+.nav div {
+  width: 100%;
+  align-self: center;
+  text-align: center;
+}
+
+.body {
+  margin: 0 50px;
+  text-align: center;
+}
+
+.movie-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.movie-item {
+  margin: 5px;
+  border: 1px solid lightgrey;
+  border-radius: 4px;
+  min-width: 200px;
+  width: 200px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.movie-item div {
+  margin: 10px;
+}
