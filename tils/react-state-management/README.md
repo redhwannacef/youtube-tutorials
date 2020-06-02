@@ -11,6 +11,8 @@ solution in all files, then the second commit will change the code to use the re
 
 Useful links:
 
+Youtube video: https://youtu.be/-nZIMVOtK1g
+
 Context: https://reactjs.org/docs/context.html
 
 Redux: https://redux.js.org/

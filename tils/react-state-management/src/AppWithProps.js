@@ -14,15 +14,29 @@ const movieList = [
   { id: 9, name: 'The Lord of the Rings: The Fellowship of the Ring', likes: 0 },
 ];
 
-const App = () => (
-  <>
-    <Nav />
-    <Body />
-  </>
-);
+const App = () => {
+  const [movies, setMovies] = useState(movieList);
 
-const Nav = () => {
-  const [movies] = useState([{ id: 0, name: 'Hard Coded Movie', likes: 0 }]);
+  const updateLikes = (id, value) => {
+    setMovies((movies) => {
+      const index = movies.findIndex((movie) => movie.id === id);
+      const movie = movies[index];
+      return [...movies.slice(0, index), { ...movie, likes: movie.likes + value }, ...movies.slice(index + 1)];
+    });
+  };
+
+  const like = (id) => updateLikes(id, 1);
+  const dislike = (id) => updateLikes(id, -1);
+
+  return (
+    <>
+      <Nav movies={movies} />
+      <Body movies={movies} like={like} dislike={dislike} />
+    </>
+  );
+};
+
+const Nav = ({ movies }) => {
   const topMovieName = movies.reduce((max, current) => (current.likes > max.likes ? current : max), movies[0]).name;
   const totalLikes = movies.reduce((accumulator, movie) => accumulator + movie.likes, 0);
 
@@ -38,13 +52,13 @@ const TopMovie = ({ topMovieName }) => <div>{topMovieName}</div>;
 
 const TotalLikes = ({ totalLikes }) => <div>Total Likes: {totalLikes}</div>;
 
-const Body = () => (
+const Body = ({ movies, like, dislike }) => (
   <div className="body">
-    <Movies />
+    <Movies movies={movies} like={like} dislike={dislike} />
   </div>
 );
 
-const Movies = () => {
+const Movies = ({ movies, like, dislike }) => {
   const [movieIds] = useState(movieList.map((movie) => movie.id));
 
   return (
@@ -52,41 +66,30 @@ const Movies = () => {
       <h2>Movies</h2>
       <div className="movie-list">
         {movieIds.map((id) => (
-          <Movie key={id} id={id} />
+          <Movie key={id} movie={movies[id]} like={like} dislike={dislike} />
         ))}
       </div>
     </div>
   );
 };
 
-const Movie = ({ id }) => {
-  const [movie, setMovie] = useState(movieList[id]);
-
-  const updateLikes = (value) => {
-    setMovie((m) => ({ ...m, likes: m.likes + value }));
-  };
-
-  const like = () => updateLikes(1);
-  const dislike = () => updateLikes(-1);
-
-  return (
-    <div className="movie-item">
-      <div>{movie.name}</div>
-      <div>{movie.likes}</div>
-      <div>
-        <button onClick={() => like()}>
-          <span role="img" aria-label="like">
-            👍🏼
-          </span>
-        </button>
-        <button onClick={() => dislike()}>
-          <span role="img" aria-label="dislike">
-            👎🏼
-          </span>
-        </button>
-      </div>
+const Movie = ({ movie, like, dislike }) => (
+  <div className="movie-item">
+    <div>{movie.name}</div>
+    <div>{movie.likes}</div>
+    <div>
+      <button onClick={() => like(movie.id)}>
+        <span role="img" aria-label="like">
+          👍🏼
+        </span>
+      </button>
+      <button onClick={() => dislike(movie.id)}>
+        <span role="img" aria-label="dislike">
+          👎🏼
+        </span>
+      </button>
     </div>
-  );
-};
+  </div>
+);
 
 export default App;

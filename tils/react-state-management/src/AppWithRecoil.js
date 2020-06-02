@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
+import { atom, RecoilRoot, selector, useRecoilState, useRecoilValue } from 'recoil';
 
 const movieList = [
   { id: 0, name: 'The Shawshank Redemption', likes: 0 },
@@ -14,17 +15,40 @@ const movieList = [
   { id: 9, name: 'The Lord of the Rings: The Fellowship of the Ring', likes: 0 },
 ];
 
+const movieWithId = (id) =>
+  atom({
+    key: `movie-${id}`,
+    default: movieList[id],
+  });
+
+const topMovieNameState = selector({
+  key: 'topMovieName',
+  get: ({ get }) => {
+    const movieIds = movieList.map((movie) => movie.id);
+    const movies = movieIds.map((id) => get(movieWithId(id)));
+    return movies.reduce((max, current) => (current.likes > max.likes ? current : max), movies[0]).name;
+  },
+});
+
+const totalLikesState = selector({
+  key: 'totalLikes',
+  get: ({ get }) => {
+    const movieIds = movieList.map((movie) => movie.id);
+    const movies = movieIds.map((id) => get(movieWithId(id)));
+    return movies.reduce((accumulator, movie) => accumulator + movie.likes, 0);
+  },
+});
+
 const App = () => (
-  <>
+  <RecoilRoot>
     <Nav />
     <Body />
-  </>
+  </RecoilRoot>
 );
 
 const Nav = () => {
-  const [movies] = useState([{ id: 0, name: 'Hard Coded Movie', likes: 0 }]);
-  const topMovieName = movies.reduce((max, current) => (current.likes > max.likes ? current : max), movies[0]).name;
-  const totalLikes = movies.reduce((accumulator, movie) => accumulator + movie.likes, 0);
+  const topMovieName = useRecoilValue(topMovieNameState);
+  const totalLikes = useRecoilValue(totalLikesState);
 
   return (
     <div className="nav">
@@ -60,7 +84,7 @@ const Movies = () => {
 };
 
 const Movie = ({ id }) => {
-  const [movie, setMovie] = useState(movieList[id]);
+  const [movie, setMovie] = useRecoilState(movieWithId(id));
 
   const updateLikes = (value) => {
     setMovie((m) => ({ ...m, likes: m.likes + value }));
