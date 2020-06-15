@@ -1,0 +1,49 @@
+body {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-weight: 300;
+  text-align: center;
+}
+
+span > label {
+  display: inherit;
+}
+
+input[type="checkbox"] {
+  box-sizing: inherit;
+  width: inherit;
+  margin-top: 30px;
+  margin-right: 10px
+}
+
+input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 14px;
+}
+
+button {
+  text-transform: uppercase;
+  margin-top: 30px;
+  width: 100%;
+  padding: 10px 0px;
+  letter-spacing: 10px;
+}
+
+label {
+  line-height: 2;
+  text-align: left;
+  display: block;
+  margin-bottom: 10px;
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+p {
+  color: red;
+}
