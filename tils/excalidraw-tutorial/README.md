@@ -19,3 +19,7 @@ HTML Canvas (MDN): https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API
 Youtube Tutorial (Moving Elements): https://youtu.be/IcfhcJrtJqI
 
 Check if a point is on a line: https://stackoverflow.com/a/17693146/5041141
+
+**Part 3 (Resizing Elements):**
+
+Youtube Tutorial (Resizing Elements): https://youtu.be/MUrlzF2L_Rc
