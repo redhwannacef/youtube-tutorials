@@ -1,0 +1,9 @@
+nav {
+  border-bottom: 1px solid lightgrey;
+  padding-right: 20px;
+  text-align: right;
+}
+
+.container {
+  margin: 0 50px;
+}
