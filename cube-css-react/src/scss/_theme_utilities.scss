@@ -1,0 +1,50 @@
+@import "src/scss/theme";
+
+// COLOURS
+.bg-primary { background: $color-primary; }
+.bg-secondary { background: $color-secondary; }
+.bg-secondary-shade { background: $color-secondary-shade; }
+.bg-tertiary { background: $color-tertiary; }
+.bg-tertiary-glare { background: $color-tertiary-glare; }
+.bg-quaternary { background: $color-quaternary; }
+.bg-light { background: $color-light; }
+.bg-light-shade { background: $color-light-shade; }
+.bg-grey { background: $color-grey; }
+
+.color-primary { color: $color-primary; }
+.color-secondary { color: $color-secondary; }
+.color-secondary-shade { color: $color-secondary-shade; }
+.color-tertiary { color: $color-tertiary; }
+.color-tertiary-glare { color: $color-tertiary-glare; }
+.color-quaternary { color: $color-quaternary; }
+.color-light { color: $color-light; }
+.color-light-shade { color: $color-light-shade; }
+.color-grey { color: $color-grey; }
+
+// SPACING
+.gap-top-300 { margin-top: $size-300; }
+.gap-top-400 { margin-top: $size-400; }
+.gap-top-500 { margin-top: $size-500; }
+.gap-top-600 { margin-top: $size-600; }
+.gap-top-700 { margin-top: $size-700; }
+
+.pad-top-300 { padding-top: $size-300; }
+.pad-top-400 { padding-top: $size-400; }
+.pad-top-500 { padding-top: $size-500; }
+.pad-top-600 { padding-top: $size-600; }
+.pad-top-700 { padding-top: $size-700; }
+
+// FONTS
+.text-300 { font-size: $size-300; }
+.text-400 { font-size: $size-400; }
+.text-500 { font-size: $size-500; }
+.text-600 { font-size: $size-600; }
+.text-700 { font-size: $size-700; }
+
+.weight-medium { font-weight: $weight-medium; }
+.weight-bold { font-weight: $weight-bold; }
+
+.font-base { font-family: $font-base; }
+.font-mono { font-family: $font-mono; }
+
+.radius { border-radius: 0.5rem; }

@@ -1,0 +1,44 @@
+@import "scss/reset";
+
+body {
+  line-height: 1.5;
+  overflow-x: hidden;
+  padding-bottom: 1.77rem;
+  font-weight: 500;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 2.4rem;
+}
+
+h2,
+h3 {
+  font-size: 1.77rem;
+}
+
+a {
+  color: currentColor;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th {
+  text-align: left;
+}
+
+:focus {
+  outline: 2px dotted;
+  outline-offset: 0.25rem;
+}
+
+@import "scss/theme_utilities";
+@import "scss/utilities";
+@import "scss/blocks";

@@ -1,0 +1,58 @@
+@import "theme";
+
+.button {
+  @extend .radius;
+
+  font: inherit;
+  display: inline-block;
+  line-height: 1;
+  text-decoration: none;
+  border: 1px solid $color-secondary;
+  background: $color-secondary;
+  padding: 0.6rem 1.5rem;
+  position: relative;
+
+  font-weight: $weight-bold;
+
+  &[data-variant="ghost"] {
+    border-color: currentColor;
+    background: transparent;
+  }
+
+  &:focus {
+    outline-offset: -0.4rem;
+    outline: 1px solid;
+  }
+
+  &:hover {
+    background: $color-primary;
+    border-color: $color-primary;
+    color: $color-light;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.pill {
+  @extend .radius;
+
+  display: inline-block;
+  padding: 0.3rem 0.35rem;
+  font-size: $size-400;
+  text-decoration: none;
+  line-height: 1;
+  white-space: nowrap;
+  text-align: center;
+
+  // Apply a default background colour if no token set
+  &:not([class*="bg-"]) {
+    background: $color-grey;
+  }
+
+  // Capitalize only in english
+  [lang*="en"] & {
+    text-transform: capitalize;
+  }
+}

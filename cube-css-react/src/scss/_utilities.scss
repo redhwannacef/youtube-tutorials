@@ -1,0 +1,45 @@
+@import "theme";
+
+.flow > * + * {
+  margin-top: var(--flow-space, 1rem);
+}
+
+.splitter {
+  > :last-child {
+    margin-top: $size-500;
+  }
+
+  @media (min-width: $breakpoints-md) {
+    display: flex;
+
+    > * {
+      flex-grow: 1;
+    }
+
+    > :last-child {
+      margin-top: 0;
+      margin-left: $size-500;
+      min-width: 22rem;
+    }
+  }
+}
+
+.wrapper {
+  max-width: 75rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 $size-500;
+}
+
+.visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: auto;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+}
+

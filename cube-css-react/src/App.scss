@@ -1,0 +1,97 @@
+@import "./scss/theme";
+
+.site-head {
+  padding: 0.8rem 0;
+
+  &__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  // Right margin prevents any collisions with the title
+  h1 {
+    margin: 0.5rem 1rem 0.5rem 0;
+  }
+}
+
+.user {
+  display: inline-grid;
+  align-items: center;
+  grid-template-columns: max-content 50px;
+  grid-gap: $size-300;
+
+  img {
+    border-radius: 100%;
+  }
+}
+
+.key-header {
+  align-items: flex-end;
+
+  > :last-child {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $size-300;
+
+    > * {
+      flex-shrink: 0;
+      margin: 0.2rem 0 0 0.2rem;
+    }
+  }
+
+  @media (min-width: $breakpoints-md) {
+    > :last-child {
+      justify-content: flex-end;
+    }
+  }
+}
+
+.table-group {
+  border: 1px solid $color-grey;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+
+  h3 {
+    --flow-space: #{$size-600};
+  }
+
+  table {
+    --flow-space: 0.2rem;
+
+    width: 100%;
+    min-width: 30rem;
+  }
+
+  td,
+  h3 {
+    padding: 0.5rem 1rem;
+  }
+
+  tr:first-child {
+    border-top: 1px solid $color-grey;
+  }
+
+  tr:nth-child(odd) td {
+    background: $color-light-shade;
+  }
+
+  td:nth-child(3) {
+    text-align: right;
+  }
+}
+
+.summary {
+  padding: $size-500 $size-500 $size-600 $size-500;
+  line-height: 1.1;
+
+  dl,
+  dt {
+    --flow-space: #{$size-700};
+  }
+
+  dd {
+    --flow-space: #{$size-300};
+  }
+}
