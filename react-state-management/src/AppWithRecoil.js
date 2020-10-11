@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import './App.css';
+import React, { memo, useCallback, useState } from 'react';
 import { atom, RecoilRoot, selector, useRecoilState, useRecoilValue } from 'recoil';
+import './App.css';
 
 const movieList = [
   { id: 0, name: 'The Shawshank Redemption', likes: 0 },
@@ -15,28 +15,20 @@ const movieList = [
   { id: 9, name: 'The Lord of the Rings: The Fellowship of the Ring', likes: 0 },
 ];
 
-const movieWithId = (id) =>
-  atom({
-    key: `movie-${id}`,
-    default: movieList[id],
-  });
+const moviesState = atom({
+  key: `moviesList`,
+  default: movieList,
+});
 
 const topMovieNameState = selector({
   key: 'topMovieName',
-  get: ({ get }) => {
-    const movieIds = movieList.map((movie) => movie.id);
-    const movies = movieIds.map((id) => get(movieWithId(id)));
-    return movies.reduce((max, current) => (current.likes > max.likes ? current : max), movies[0]).name;
-  },
+  get: ({ get }) =>
+    get(moviesState).reduce((max, current) => (current.likes > max.likes ? current : max), get(moviesState)[0]).name,
 });
 
 const totalLikesState = selector({
   key: 'totalLikes',
-  get: ({ get }) => {
-    const movieIds = movieList.map((movie) => movie.id);
-    const movies = movieIds.map((id) => get(movieWithId(id)));
-    return movies.reduce((accumulator, movie) => accumulator + movie.likes, 0);
-  },
+  get: ({ get }) => get(moviesState).reduce((accumulator, movie) => accumulator + movie.likes, 0),
 });
 
 const App = () => (
@@ -70,40 +62,43 @@ const Body = () => (
 
 const Movies = () => {
   const [movieIds] = useState(movieList.map((movie) => movie.id));
+  const [movies, setMovies] = useRecoilState(moviesState);
+
+  const updateLikes = (id, value) => {
+    setMovies((movies) => {
+      const index = movies.findIndex((movie) => movie.id === id);
+      const movie = movies[index];
+      return [...movies.slice(0, index), { ...movie, likes: movie.likes + value }, ...movies.slice(index + 1)];
+    });
+  };
+
+  const like = useCallback((id) => updateLikes(id, 1), []);
+  const dislike = useCallback((id) => updateLikes(id, -1), []);
 
   return (
     <div>
       <h2>Movies</h2>
       <div className="movie-list">
         {movieIds.map((id) => (
-          <Movie key={id} id={id} />
+          <Movie key={id} movie={movies[id]} like={like} dislike={dislike} />
         ))}
       </div>
     </div>
   );
 };
-
-const Movie = ({ id }) => {
-  const [movie, setMovie] = useRecoilState(movieWithId(id));
-
-  const updateLikes = (value) => {
-    setMovie((m) => ({ ...m, likes: m.likes + value }));
-  };
-
-  const like = () => updateLikes(1);
-  const dislike = () => updateLikes(-1);
-
+const Movie = memo(({ movie, like, dislike }) => {
+  console.log('rendering', movie.id);
   return (
     <div className="movie-item">
       <div>{movie.name}</div>
       <div>{movie.likes}</div>
       <div>
-        <button onClick={() => like()}>
+        <button onClick={() => like(movie.id)}>
           <span role="img" aria-label="like">
             👍🏼
           </span>
         </button>
-        <button onClick={() => dislike()}>
+        <button onClick={() => dislike(movie.id)}>
           <span role="img" aria-label="dislike">
             👎🏼
           </span>
@@ -111,6 +106,6 @@ const Movie = ({ id }) => {
       </div>
     </div>
   );
-};
+});
 
 export default App;

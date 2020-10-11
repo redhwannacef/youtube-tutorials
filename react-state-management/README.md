@@ -1,5 +1,7 @@
 # react-state-management
 
+## Part 1
+
 A look comparing a few different approaches to managing state in react. Mainly this looks at four approaches:
   1. Props
   2. React Context
@@ -22,3 +24,15 @@ React-Redux: https://react-redux.js.org/
 Redux-Toolkit: https://redux-toolkit.js.org/
 
 Recoil: https://recoiljs.org/
+
+## Part 2
+
+Continuing on the same theme, this time assing Jotai and Zustand into the mix.
+
+Useful links:
+
+Youtube video: Coming Soon...
+
+Jotai: https://github.com/pmndrs/jotai
+
+Zustand: https://github.com/pmndrs/zustand

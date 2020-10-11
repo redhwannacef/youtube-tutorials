@@ -1,7 +1,6 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import './App.css';
-import produce from 'immer';
-import create from 'zustand';
+import { atom, RecoilRoot, selector, useRecoilState, useRecoilValue } from 'recoil';
 
 const movieList = [
   { id: 0, name: 'The Shawshank Redemption', likes: 0 },
@@ -16,38 +15,40 @@ const movieList = [
   { id: 9, name: 'The Lord of the Rings: The Fellowship of the Ring', likes: 0 },
 ];
 
-// Turn the set method into an immer proxy
-const immer = (config) => (set, get, api) => config((fn) => set(produce(fn)), get, api);
+const movieWithId = (id) =>
+  atom({
+    key: `movie-${id}`,
+    default: movieList[id],
+  });
 
-const useStore = create(
-  immer((set, get) => ({
-    movies: movieList,
-    like: (id) =>
-      set((state) => {
-        state.movies[id].likes += 1;
-      }),
-    dislike: (id) =>
-      set((state) => {
-        state.movies[id].likes -= 1;
-      }),
-    topMovieName: () =>
-      get().movies.reduce((max, current) => (current.likes > max.likes ? current : max), get().movies[0]).name,
-    totalLikes: () => get().movies.reduce((accumulator, movie) => accumulator + movie.likes, 0),
-  }))
-);
+const topMovieNameState = selector({
+  key: 'topMovieName',
+  get: ({ get }) => {
+    const movieIds = movieList.map((movie) => movie.id);
+    const movies = movieIds.map((id) => get(movieWithId(id)));
+    return movies.reduce((max, current) => (current.likes > max.likes ? current : max), movies[0]).name;
+  },
+});
+
+const totalLikesState = selector({
+  key: 'totalLikes',
+  get: ({ get }) => {
+    const movieIds = movieList.map((movie) => movie.id);
+    const movies = movieIds.map((id) => get(movieWithId(id)));
+    return movies.reduce((accumulator, movie) => accumulator + movie.likes, 0);
+  },
+});
 
 const App = () => (
-  <>
+  <RecoilRoot>
     <Nav />
     <Body />
-  </>
+  </RecoilRoot>
 );
 
 const Nav = () => {
-  const { topMovieName, totalLikes } = useStore(({ topMovieName, totalLikes }) => ({
-    topMovieName: topMovieName(),
-    totalLikes: totalLikes(),
-  }));
+  const topMovieName = useRecoilValue(topMovieNameState);
+  const totalLikes = useRecoilValue(totalLikesState);
 
   return (
     <div className="nav">
@@ -67,37 +68,42 @@ const Body = () => (
   </div>
 );
 
-const stateToMovie = ({ movies, like, dislike }) => ({ movies, like, dislike });
-
 const Movies = () => {
   const [movieIds] = useState(movieList.map((movie) => movie.id));
-  const { movies, like, dislike } = useStore(stateToMovie);
 
   return (
     <div>
       <h2>Movies</h2>
       <div className="movie-list">
-        {movieIds.map((id) => {
-          return <Movie key={id} movie={movies[id]} like={like} dislike={dislike} />;
-        })}
+        {movieIds.map((id) => (
+          <Movie key={id} id={id} />
+        ))}
       </div>
     </div>
   );
 };
 
-const Movie = React.memo(({ movie, like, dislike }) => {
-  console.log('render', movie.id);
+const Movie = ({ id }) => {
+  const [movie, setMovie] = useRecoilState(movieWithId(id));
+
+  const updateLikes = (value) => {
+    setMovie((m) => ({ ...m, likes: m.likes + value }));
+  };
+
+  const like = () => updateLikes(1);
+  const dislike = () => updateLikes(-1);
+
   return (
     <div className="movie-item">
       <div>{movie.name}</div>
       <div>{movie.likes}</div>
       <div>
-        <button onClick={() => like(movie.id)}>
+        <button onClick={() => like()}>
           <span role="img" aria-label="like">
             👍🏼
           </span>
         </button>
-        <button onClick={() => dislike(movie.id)}>
+        <button onClick={() => dislike()}>
           <span role="img" aria-label="dislike">
             👎🏼
           </span>
@@ -105,6 +111,6 @@ const Movie = React.memo(({ movie, like, dislike }) => {
       </div>
     </div>
   );
-});
+};
 
 export default App;

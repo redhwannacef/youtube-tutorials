@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import './App.css';
 
 const movieList = [
@@ -27,8 +27,8 @@ const MovieProvider = (props) => {
     });
   };
 
-  const like = (id) => updateLikes(id, 1);
-  const dislike = (id) => updateLikes(id, -1);
+  const like = useCallback((id) => updateLikes(id, 1), []);
+  const dislike = useCallback((id) => updateLikes(id, -1), []);
 
   return <MovieContext.Provider value={[movies, like, dislike]}>{props.children}</MovieContext.Provider>;
 };
@@ -79,7 +79,7 @@ const Movies = () => {
   );
 };
 
-const Movie = ({ movie, like, dislike }) => (
+const Movie = React.memo(({ movie, like, dislike }) => (
   <div className="movie-item">
     <div>{movie.name}</div>
     <div>{movie.likes}</div>
@@ -96,6 +96,6 @@ const Movie = ({ movie, like, dislike }) => (
       </button>
     </div>
   </div>
-);
+));
 
 export default App;
