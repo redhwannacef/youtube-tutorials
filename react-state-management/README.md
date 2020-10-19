@@ -31,7 +31,7 @@ Continuing on the same theme, this time assing Jotai and Zustand into the mix.
 
 Useful links:
 
-Youtube video: Coming Soon...
+Youtube video: https://youtu.be/BaEWIbxZKco
 
 Jotai: https://github.com/pmndrs/jotai
 
