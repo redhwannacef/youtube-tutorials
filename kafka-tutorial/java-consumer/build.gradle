@@ -1,0 +1,17 @@
+plugins {
+    id 'application'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.13'
+    compile group: 'org.apache.kafka', name: 'kafka-clients', version: '2.6.0'
+    compile group: 'org.apache.kafka', name: 'kafka-streams', version: '2.6.0'
+}
+
+application {
+    mainClassName = "kafka.tutorial.app.App"
+}
