@@ -170,6 +170,8 @@ const App = () => {
   };
 
   const handleMouseUp = () => {
+    // We can wrap the next 6 line with if(selectedElement) {} to avoid an issue as selectedElement can be null,
+    // this will be updated in the next video.
     const index = selectedElement.id;
     const { id, type } = elements[index];
     if (action === "drawing" || action === "resizing") {
