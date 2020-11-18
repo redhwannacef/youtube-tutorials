@@ -15,6 +15,13 @@ const nearPoint = (x, y, x1, y1, name) => {
   return Math.abs(x - x1) < 5 && Math.abs(y - y1) < 5 ? name : null;
 };
 
+const pointIsOnLine = (lineStart, lineEnd, point, name) => {
+  const offset = distance(lineStart, lineEnd) - (distance(lineStart, point) + distance(lineEnd, point));
+  return Math.abs(offset) < 1 ? name : null;
+};
+
+const point = (x, y) => ({ x, y });
+
 const positionWithinElement = (x, y, element) => {
   const { type, x1, x2, y1, y2 } = element;
   if (type === "rectangle") {
@@ -22,16 +29,20 @@ const positionWithinElement = (x, y, element) => {
     const topRight = nearPoint(x, y, x2, y1, "tr");
     const bottomLeft = nearPoint(x, y, x1, y2, "bl");
     const bottomRight = nearPoint(x, y, x2, y2, "br");
+
+    const top = pointIsOnLine(point(x1, y1), point(x2, y1), point(x, y), "t");
+    const right = pointIsOnLine(point(x2, y1), point(x2, y2), point(x, y), "r");
+    const bottom = pointIsOnLine(point(x1, y2), point(x2, y2), point(x, y), "b");
+    const left = pointIsOnLine(point(x1, y1), point(x1, y2), point(x, y), "l");
+
     const inside = x >= x1 && x <= x2 && y >= y1 && y <= y2 ? "inside" : null;
-    return topLeft || topRight || bottomLeft || bottomRight || inside;
+    return (
+      topLeft || topRight || bottomLeft || bottomRight || top || right || bottom || left || inside
+    );
   } else {
-    const a = { x: x1, y: y1 };
-    const b = { x: x2, y: y2 };
-    const c = { x, y };
-    const offset = distance(a, b) - (distance(a, c) + distance(b, c));
     const start = nearPoint(x, y, x1, y1, "start");
     const end = nearPoint(x, y, x2, y2, "end");
-    const inside = Math.abs(offset) < 1 ? "inside" : null;
+    const inside = pointIsOnLine(point(x1, y1), point(x2, y2), point(x, y), "inside")
     return start || end || inside;
   }
 };
@@ -71,6 +82,12 @@ const cursorForPosition = position => {
     case "tr":
     case "bl":
       return "nesw-resize";
+    case "t":
+    case "b":
+      return "ns-resize";
+    case "r":
+    case "l":
+      return "ew-resize";
     default:
       return "move";
   }
@@ -89,6 +106,14 @@ const resizedCoordinates = (clientX, clientY, position, coordinates) => {
     case "br":
     case "end":
       return { x1, y1, x2: clientX, y2: clientY };
+    case "t":
+      return { x1, y1: clientY, x2, y2 };
+    case "r":
+      return { x1, y1, x2: clientX, y2 };
+    case "b":
+      return { x1, y1, x2, y2: clientY };
+    case "l":
+      return { x1: clientX, y1, x2, y2 };
     default:
       return null; //should not really get here...
   }
@@ -170,13 +195,13 @@ const App = () => {
   };
 
   const handleMouseUp = () => {
-    // We can wrap the next 6 line with if(selectedElement) {} to avoid an issue as selectedElement can be null,
-    // this will be updated in the next video.
-    const index = selectedElement.id;
-    const { id, type } = elements[index];
-    if (action === "drawing" || action === "resizing") {
-      const { x1, y1, x2, y2 } = adjustElementCoordinates(elements[index]);
-      updateElement(id, x1, y1, x2, y2, type);
+    if (selectedElement) {
+      const index = selectedElement.id;
+      const { id, type } = elements[index];
+      if (action === "drawing" || action === "resizing") {
+        const { x1, y1, x2, y2 } = adjustElementCoordinates(elements[index]);
+        updateElement(id, x1, y1, x2, y2, type);
+      }
     }
     setAction("none");
     setSelectedElement(null);
