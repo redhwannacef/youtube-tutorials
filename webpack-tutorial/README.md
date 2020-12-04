@@ -4,7 +4,7 @@ This covers everything you need to know to get started with about webpack.
 
  Useful Links:
  
- Youtube: https://youtu.be/5jzmbn-Q79o
+ Youtube: https://youtu.be/BZG9gSUHmNo
  
  Webpack: https://webpack.js.org/
  
