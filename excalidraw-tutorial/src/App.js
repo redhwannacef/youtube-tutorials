@@ -105,7 +105,8 @@ const useHistory = initialState => {
       historyCopy[index] = newState;
       setHistory(historyCopy);
     } else {
-      setHistory(prevState => [...prevState, newState]);
+      const updatedState = [...history].slice(0, index + 1);
+      setHistory([...updatedState, newState]);
       setIndex(prevState => prevState + 1);
     }
   };
