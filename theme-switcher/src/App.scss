@@ -1,0 +1,72 @@
+body {
+  margin: 0;
+}
+
+main {
+  min-height: 100vh;
+}
+
+input {
+  margin: 0;
+}
+
+.wrapper {
+  margin: auto;
+  max-width: 35rem;
+  padding: 1rem;
+}
+
+.flow > * + * {
+  margin-top: 1em;
+}
+
+.theme-font-size {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  & > * {
+    cursor: pointer;
+  }
+}
+
+.theme-color {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.theme-color-input {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+
+  & > * + * {
+    margin-top: 0.5rem;
+  }
+}
+
+.theme-background {
+  display: flex;
+  justify-content: space-between;
+
+  & > * {
+    width: 100%;
+    margin: 5px;
+  }
+}
+
+.theme-background-input {
+  height: 4em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 4px;
+  padding: 0 1rem;
+  cursor: pointer;
+
+  & input {
+    margin-right: 20px;
+  }
+}

@@ -1,0 +1,22 @@
+:root {
+  --size: 1rem;
+  --color-primary: #1da1f2;
+  --background: #fff;
+  --color: #000;
+}
+
+[data-theme-size="xs"] { --size: 0.8rem }
+[data-theme-size="sm"] { --size: 0.9rem }
+[data-theme-size="md"] { --size: 1.0rem }
+[data-theme-size="lg"] { --size: 1.1rem }
+[data-theme-size="xl"] { --size: 1.2rem }
+
+[data-theme-color="yellow"] { --color-primary: #ffad1f; }
+[data-theme-color="red"] { --color-primary: #e0255e; }
+[data-theme-color="purple"] { --color-primary: #794bc3; }
+[data-theme-color="orange"] { --color-primary: #f45e22; }
+[data-theme-color="green"] { --color-primary: #17bf63; }
+
+[data-theme-background="light"] { --background: #fff; --color: #000; }
+[data-theme-background="dim"] { --background: #15202b; --color: #fff; }
+[data-theme-background="dark"] { --background: #000; --color: #d9d9d9; }

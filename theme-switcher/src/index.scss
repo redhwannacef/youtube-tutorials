@@ -1,0 +1,21 @@
+@import "src/theme.scss";
+
+main {
+  transition: font-size 0.25s ease-in, color 0.25s ease-in, background-color 0.25s ease-in;
+}
+
+.size {
+  font-size: var(--size);
+}
+
+.color-primary {
+  color: var(--color-primary);
+}
+
+.background {
+  background-color: var(--background);
+}
+
+.color {
+  color: var(--color);
+}
