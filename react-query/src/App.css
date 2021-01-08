@@ -1,0 +1,12 @@
+main {
+  padding-top: 50px;
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+svg {
+  display: block;
+  margin: 0 auto;
+  width: 200px;
+}
