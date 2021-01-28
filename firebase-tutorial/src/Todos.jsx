@@ -1,7 +1,6 @@
 import "./App.css";
 import { useState } from "react";
-import { auth, firestore, functions } from "./firebase";
-import firebase from "firebase";
+import firebase, { auth, firestore, functions } from "./firebase";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
 const addTodo = functions.httpsCallable("addTodo");
@@ -39,7 +38,7 @@ const Todos = () => {
           />
           <button type="submit">Add</button>
         </form>
-        {todos && todos.map((todo) => <Todo {...todo} />)}
+        {todos && todos.map((todo) => <Todo key={todo.id} {...todo} />)}
       </main>
     </>
   );
