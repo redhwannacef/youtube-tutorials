@@ -6,6 +6,7 @@ export const Arc: React.FC<{
 	rotation: number;
 	rotateProgress: number;
 }> = ({progress, rotation, rotateProgress}) => {
+	console.log(rotateProgress)
 	const config = useVideoConfig();
 	const cx = config.width / 2;
 	const cy = config.height / 2;

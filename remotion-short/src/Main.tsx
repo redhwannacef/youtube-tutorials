@@ -1,6 +1,5 @@
 import {
 	AbsoluteFill,
-	Audio,
 	Img,
 	interpolate,
 	Sequence,
@@ -13,7 +12,6 @@ import {Subscribe} from './Subscribe';
 import {Subtitle} from './Subtitle';
 import {Title} from './Title';
 import {Transition} from './Transition';
-import voiceover from './voiceover.wav';
 
 export const Main: React.FC = () => {
 	const frame = useCurrentFrame();
@@ -84,8 +82,6 @@ export const Main: React.FC = () => {
 					<Title text="Stay tuned for the tutorial 🚀" />
 				</Sequence>
 			</div>
-
-			<Audio src={voiceover} />
 		</div>
 	);
 };

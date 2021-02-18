@@ -20,6 +20,8 @@ export const ReactLogo: React.FC = () => {
 			damping: 100,
 			mass: 0.5,
 		},
+		from: 0,
+		to: 1 ,
 		fps: videoConfig.fps,
 		frame,
 	});
@@ -76,7 +78,7 @@ export const ReactLogo: React.FC = () => {
 				rotation={-30}
 				progress={development}
 			/>
-			<Atom scale={rotationDevelopment} />
+			<Atom scale={development}   />
 		</div>
 	);
 };
