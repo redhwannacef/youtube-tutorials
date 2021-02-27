@@ -1,10 +1,10 @@
 # react query tutorial
 
-Short tutorial on how fetching data with React Query
-
 Useful Links:
 
-YouTube: https://youtu.be/Ocj3wDyuxP0
+Queries YouTube Tutorial: https://youtu.be/Ocj3wDyuxP0
+
+Mutations YouTube Tutorial: https://youtu.be/pzxjrMWF8Hk
 
 React Query: https://github.com/tannerlinsley/react-query
 
