@@ -1,0 +1,138 @@
+### Health Check
+# curl -X GET "localhost:9200/_cat/nodes?v&pretty"
+GET localhost:9200/_cat/health?v
+
+### Index Single Document
+# curl -X PUT "localhost:9200/customer/_doc/1?pretty" -H 'Content-Type: application/json' -d'
+#{
+#  "name": "John Doe"
+#}
+#'
+PUT localhost:9200/customer/_doc/1?pretty
+Content-Type: application/json
+
+{
+  "name": "John Doe"
+}
+
+### Get Document by id
+# curl -X GET "localhost:9200/customer/_doc/1?pretty"
+GET localhost:9200/customer/_doc/1?pretty
+
+
+### Final All customers
+# curl -X GET "localhost:9200/customers/_search?pretty" -H 'Content-Type: application/json' -d'
+#{
+#  "query": { "match_all": {} }
+#}
+#'
+GET localhost:9200/customer/_search
+Content-Type: application/json
+
+{
+  "query": { "match_all": {} }
+}
+
+### Bulk Insert
+# curl -H "Content-Type: application/json" -XPOST "localhost:9200/bank/_bulk?pretty&refresh" --data-binary "@accounts.json"
+POST localhost:9200/bank/_bulk?pretty&refresh
+Content-Type: application/json
+
+< accounts.json
+
+### Get all Indices
+# curl "localhost:9200/_cat/indices?v=true"
+GET localhost:9200/_cat/indices?v=true
+
+### Search all Accounts
+# curl -X GET "localhost:9200/bank/_search?pretty" -H 'Content-Type: application/json' -d'
+#{
+#  "query": { "match_all": {} },
+#  "sort": [
+#    { "account_number": "asc" }
+#  ]
+#}
+#'
+GET localhost:9200/bank/_search?pretty
+Content-Type: application/json
+
+{
+  "query": {
+    "match_all": {}
+  },
+  "sort": [
+    {
+      "account_number": "asc"
+    }
+  ],
+  "from": 99,
+  "size": 100
+}
+
+### Find accounts that live on mill lane
+
+# curl -X GET "localhost:9200/bank/_search?pretty" -H 'Content-Type: application/json' -d'
+#{
+#  "query": { "match_phrase": { "address": "mill lane" } }
+#}
+#'
+GET localhost:9200/bank/_search?pretty
+Content-Type: application/json
+
+
+{
+  "query": {
+    "match_phrase": {
+      "address": "mill lane"
+    }
+  }
+}
+
+
+### Customers over 40 who dont live in Idaho
+
+# curl -X GET "localhost:9200/bank/_search?pretty" -H 'Content-Type: application/json' -d'
+#{
+#  "query": {
+#    "bool": {
+#      "must": [
+#        { "match": { "age": "40" } }
+#      ],
+#      "must_not": [
+#        { "match": { "state": "ID" } }
+#      ]
+#    }
+#  }
+#}
+#'
+GET localhost:9200/bank/_search?pretty
+Content-Type: application/json
+
+
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "age": "40"
+          }
+        }
+      ],
+      "must_not": [
+        {
+          "match": {
+            "state": "ID"
+          }
+        }
+      ]
+    }
+  }
+}
+
+
+###
+
+
+
+
