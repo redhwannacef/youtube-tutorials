@@ -1,0 +1,13 @@
+_format_version: "2.1"
+
+services:
+  - name: gist-service
+    url: https://api.github.com
+    routes:
+      - name: gists-route
+        paths:
+          - /gists
+    plugins:
+      - name: go-wait
+        config:
+          waittime: 5
