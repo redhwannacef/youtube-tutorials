@@ -1,0 +1,14 @@
+{
+  "name": "pupeteer-tutorial",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "pricecheck": "node pricecheck.js",
+    "screenshot": "node screenshot.js"
+  },
+  "dependencies": {
+    "puppeteer": "^8.0.0"
+  }
+}
