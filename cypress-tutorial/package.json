@@ -1,0 +1,13 @@
+{
+  "name": "cypress-tutorial",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "cypress open",
+    "run": "cypress run"
+  },
+  "devDependencies": {
+    "cypress": "^7.2.0"
+  }
+}
