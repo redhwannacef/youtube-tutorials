@@ -1,14 +1,30 @@
 import "./App.css";
-import { useState } from "react";
-import firebase, { auth, firestore, functions } from "./firebase";
-import { useCollectionData } from "react-firebase-hooks/firestore";
+import { useEffect, useState } from "react";
+import { auth, firestore, functions } from "./firebase";
+import { httpsCallable } from "firebase/functions";
+import {
+  collection,
+  onSnapshot,
+  deleteDoc,
+  serverTimestamp,
+  doc,
+  setDoc,
+} from "firebase/firestore";
 
-const addTodo = functions.httpsCallable("addTodo");
+const addTodo = httpsCallable(functions, "addTodo");
 
 const Todos = () => {
   const [todo, setTodo] = useState("");
-  const todosRef = firestore.collection(`users/${auth.currentUser.uid}/todos`);
-  const [todos] = useCollectionData(todosRef, { idField: "id" });
+  const [todos, setTodos] = useState([]);
+
+  useEffect(() => {
+    return onSnapshot(
+      collection(firestore, `users/${auth.currentUser.uid}/todos`),
+      (snapshot) => {
+        setTodos(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      }
+    );
+  }, []);
 
   const signOut = () => auth.signOut();
 
@@ -19,7 +35,7 @@ const Todos = () => {
     addTodo({
       text: todo,
       complete: false,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      createdAt: serverTimestamp(),
     });
   };
 
@@ -45,11 +61,15 @@ const Todos = () => {
 };
 
 const Todo = ({ id, complete, text }) => {
-  const todosRef = firestore.collection(`users/${auth.currentUser.uid}/todos`);
   const onCompleteTodo = (id, complete) =>
-    todosRef.doc(id).set({ complete: !complete }, { merge: true });
+    setDoc(
+      doc(firestore, `users/${auth.currentUser.uid}/todos/${id}`),
+      { complete: !complete },
+      { merge: true }
+    );
 
-  const onDeleteTodo = (id) => todosRef.doc(id).delete();
+  const onDeleteTodo = (id) =>
+    deleteDoc(doc(firestore, `users/${auth.currentUser.uid}/todos/${id}`));
 
   return (
     <div key={id} className="todo">
