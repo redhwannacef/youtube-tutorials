@@ -27,3 +27,9 @@ Youtube Tutorial (Resizing Elements): https://youtu.be/MUrlzF2L_Rc
 **Part 4 (Undo Redo):**
 
 Youtube Tutorial (Undo Redo): https://youtu.be/KHdNJb54_pQ
+
+**Part 5 (Pencil Tool):**
+
+Youtube Tutorial (Pencil Tool): https://youtu.be/Fx3yt3zKdyk
+
+Perfect-Freehand: https://github.com/steveruizok/perfect-freehand
