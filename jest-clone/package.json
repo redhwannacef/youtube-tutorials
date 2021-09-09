@@ -1,0 +1,12 @@
+{
+  "name": "jest-clone",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "node -r ./testSuite.js ./jest.js"
+  },
+  "devDependencies": {
+    "glob": "^7.1.7"
+  }
+}
