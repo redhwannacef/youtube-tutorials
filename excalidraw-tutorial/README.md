@@ -33,3 +33,13 @@ Youtube Tutorial (Undo Redo): https://youtu.be/KHdNJb54_pQ
 Youtube Tutorial (Pencil Tool): https://youtu.be/Fx3yt3zKdyk
 
 Perfect-Freehand: https://github.com/steveruizok/perfect-freehand
+
+**Part 6 (Text Tool):**
+
+Youtube Tutorial (Text Tool): https://youtu.be/W05mJF1DnWg
+
+MDN Docs Text: https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Drawing_text
+
+MDN Docs Measure Text: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/measureText
+
+
