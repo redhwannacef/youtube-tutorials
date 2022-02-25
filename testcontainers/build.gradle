@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.jooq:jooq:3.16.4'
+    runtimeOnly 'org.postgresql:postgresql:42.3.2'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+    testImplementation 'org.assertj:assertj-core:3.22.0'
+
+    testImplementation 'org.testcontainers:junit-jupiter:1.16.3'
+    testImplementation 'org.testcontainers:postgresql:1.16.3'
+
+    testImplementation 'org.flywaydb:flyway-core:8.5.0'
+}
+
+tasks.withType(Test) {
+    useJUnitPlatform()
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
