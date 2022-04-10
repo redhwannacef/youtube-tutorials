@@ -1,0 +1,3 @@
+files:
+  - source: /localisation-tutorial/public/*.json
+    translation: /%two_letters_code%.json
