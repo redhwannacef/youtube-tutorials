@@ -1,6 +1,6 @@
 {
-  "welcome": "Welcome!!!",
-  "sample": "Sample <bold><italics>text</italics></bold>.",
-  "changed": "You have changed the language {{count}} time",
-  "changed_plural": "You have changed the language {{count}} times"
+  "welcome": "Bienvenue!!!",
+  "sample": "Exemple <bold><italics>texte</italics></bold>.",
+  "changed": "Vous avez changé la langue {{count}} fois",
+  "changed_plural": "Vous avez changé la langue {{count}} fois"
 }
