@@ -1,0 +1,3 @@
+files:
+  - source: /crowdin-tutorial/public/translations/en.json
+    translation: /%original_path%/%two_letters_code%.json
