@@ -258,8 +258,10 @@ const App = () => {
 
   const handleMouseDown = event => {
     if (action === "writing") return;
-
-    const { clientX, clientY } = event;
+    
+    const clientX = event.pageX   // get the position depending on pointer position on page not 
+    const clientY = event.pageY
+    
     if (tool === "selection") {
       const element = getElementAtPosition(clientX, clientY, elements);
       if (element) {
@@ -291,7 +293,8 @@ const App = () => {
   };
 
   const handleMouseMove = event => {
-    const { clientX, clientY } = event;
+    const clientX = event.pageX
+    const clientY = event.pageY
 
     if (tool === "selection") {
       const element = getElementAtPosition(clientX, clientY, elements);
@@ -331,7 +334,8 @@ const App = () => {
   };
 
   const handleMouseUp = event => {
-    const { clientX, clientY } = event;
+    const clientX = event.pageX  
+    const clientY = event.pageY
     if (selectedElement) {
       if (
         selectedElement.type === "text" &&
