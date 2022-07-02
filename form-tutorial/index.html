@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Form Tutorial</title>
+    <style>
+      form > * {
+        display: block;
+        margin-top: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Form Tutorial</h1>
+    <form
+      name="some-form"
+      autocomplete="off"
+      method="get"
+      action="submitted.html"
+    >
+      <label>title <input name="title" /></label>
+      <label>checkbox <input type="checkbox" name="checkbox" /></label>
+      <label>radio sm <input type="radio" name="radio" value="s" /></label>
+      <label>radio md <input type="radio" name="radio" value="m" /></label>
+      <label>radio lg <input type="radio" name="radio" value="l" /></label>
+      <label>number <input type="number" name="number" /></label>
+      <label>color <input type="color" name="color" /></label>
+      <label>datetime-local <input type="datetime-local" name="datetime-local" /></label>
+      <label>date <input type="date" name="date" /></label>
+      <label>month <input type="month" name="month" /></label>
+      <label>time <input type="time" name="time" /></label>
+      <label>week <input type="week" name="week" /></label>
+      <label>email <input type="email" name="email" /></label>
+      <label>file <input type="file" name="file" /></label>
+      <label>hidden <input type="hidden" name="hidden" value="You cant see me" /></label>
+      <label>password <input type="password" name="password" /></label>
+      <label>range <input type="range" name="range" /></label>
+      <label>url <input type="url" name="url" /></label>
+      <label>textarea <textarea name="textarea"></textarea></label>
+      <label>
+        select
+        <select name="pets">
+          <option value="">--Please choose an option--</option>
+          <option value="dog">Dog</option>
+          <option value="cat">Cat</option>
+          <option value="hamster">Hamster</option>
+          <option value="parrot">Parrot</option>
+          <option value="spider">Spider</option>
+          <option value="goldfish">Goldfish</option>
+        </select>
+      </label>
+      <label>
+        datalist
+        <input list="datalist" name="datalist" />
+        <datalist id="datalist">
+          <option value="Chocolate"></option>
+          <option value="Coconut"></option>
+          <option value="Mint"></option>
+          <option value="Strawberry"></option>
+          <option value="Vanilla"></option>
+        </datalist>
+      </label>
+      <button>Submit</button>
+    </form>
+    <pre></pre>
+  </body>
+  <script>
+    document.forms.namedItem("some-form").onsubmit = (event) => {
+      event.preventDefault();
+      const formData = Object.fromEntries(new FormData(event.target));
+      document.querySelector("pre").innerHTML = JSON.stringify(
+        formData,
+        null,
+        2
+      );
+    };
+  </script>
+</html>

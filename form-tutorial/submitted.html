@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Submitted</title>
+  </head>
+  <body>
+    <h1>Submitted</h1>
+    <pre></pre>
+  </body>
+  <script>
+    const params = new URL(window.location).searchParams;
+    document
+      .querySelector("pre")
+      .append(JSON.stringify(Object.fromEntries(params), null, 2));
+  </script>
+</html>
