@@ -1,0 +1,6 @@
+{
+  "compilerOptions": {
+    "lib": ["dom", "dom.asynciterable", "deno.ns"]
+  },
+  "importMap": "./import_map.json"
+}
