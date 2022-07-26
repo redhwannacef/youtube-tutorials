@@ -4,17 +4,20 @@ import getStroke from "perfect-freehand";
 
 const generator = rough.generator();
 
-const createElement = (id, x1, y1, x2, y2, type) => {
+const createElement = (id, x1, y1, x2, y2, type, options) => {
   switch (type) {
     case "line":
     case "rectangle":
       const roughElement =
         type === "line"
-          ? generator.line(x1, y1, x2, y2)
-          : generator.rectangle(x1, y1, x2 - x1, y2 - y1);
-      return { id, x1, y1, x2, y2, type, roughElement };
+          ? generator.line(x1, y1, x2, y2, { stroke: options.color })
+          : generator.rectangle(x1, y1, x2 - x1, y2 - y1, {
+              stroke: options.color,
+              fill: options.color,
+            });
+      return { id, x1, y1, x2, y2, type, options, roughElement };
     case "pencil":
-      return { id, type, points: [{ x: x1, y: y1 }] };
+      return { id, type, points: [{ x: x1, y: y1 }], options };
     case "text":
       return { id, type, x1, y1, x2, y2, text: "" };
     default:
@@ -164,9 +167,11 @@ const drawElement = (roughCanvas, context, element) => {
   switch (element.type) {
     case "line":
     case "rectangle":
+      context.strokeStyle = "red";
       roughCanvas.draw(element.roughElement);
       break;
     case "pencil":
+      context.fillStyle = element.options.color;
       const stroke = getSvgPathFromStroke(getStroke(element.points));
       context.fill(new Path2D(stroke));
       break;
@@ -187,6 +192,7 @@ const App = () => {
   const [action, setAction] = useState("none");
   const [tool, setTool] = useState("text");
   const [selectedElement, setSelectedElement] = useState(null);
+  const [color, setColor] = React.useState("red");
   const textAreaRef = useRef();
 
   useLayoutEffect(() => {
@@ -233,7 +239,7 @@ const App = () => {
     switch (type) {
       case "line":
       case "rectangle":
-        elementsCopy[id] = createElement(id, x1, y1, x2, y2, type);
+        elementsCopy[id] = createElement(id, x1, y1, x2, y2, type, options);
         break;
       case "pencil":
         elementsCopy[id].points = [...elementsCopy[id].points, { x: x2, y: y2 }];
@@ -245,7 +251,7 @@ const App = () => {
           .measureText(options.text).width;
         const textHeight = 24;
         elementsCopy[id] = {
-          ...createElement(id, x1, y1, x1 + textWidth, y1 + textHeight, type),
+          ...createElement(id, x1, y1, x1 + textWidth, y1 + textHeight, type, options),
           text: options.text,
         };
         break;
@@ -282,7 +288,7 @@ const App = () => {
       }
     } else {
       const id = elements.length;
-      const element = createElement(id, clientX, clientY, clientX, clientY, tool);
+      const element = createElement(id, clientX, clientY, clientX, clientY, tool, { color });
       setElements(prevState => [...prevState, element]);
       setSelectedElement(element);
 
@@ -300,8 +306,8 @@ const App = () => {
 
     if (action === "drawing") {
       const index = elements.length - 1;
-      const { x1, y1 } = elements[index];
-      updateElement(index, x1, y1, clientX, clientY, tool);
+      const { x1, y1, options } = elements[index];
+      updateElement(index, x1, y1, clientX, clientY, tool, options);
     } else if (action === "moving") {
       if (selectedElement.type === "pencil") {
         const newPoints = selectedElement.points.map((_, index) => ({
@@ -315,18 +321,31 @@ const App = () => {
         };
         setElements(elementsCopy, true);
       } else {
-        const { id, x1, x2, y1, y2, type, offsetX, offsetY } = selectedElement;
+        const {
+          id,
+          x1,
+          x2,
+          y1,
+          y2,
+          options: colorOptions,
+          type,
+          offsetX,
+          offsetY,
+        } = selectedElement;
         const width = x2 - x1;
         const height = y2 - y1;
         const newX1 = clientX - offsetX;
         const newY1 = clientY - offsetY;
         const options = type === "text" ? { text: selectedElement.text } : {};
-        updateElement(id, newX1, newY1, newX1 + width, newY1 + height, type, options);
+        updateElement(id, newX1, newY1, newX1 + width, newY1 + height, type, {
+          ...options,
+          ...colorOptions,
+        });
       }
     } else if (action === "resizing") {
-      const { id, type, position, ...coordinates } = selectedElement;
+      const { id, type, options, position, ...coordinates } = selectedElement;
       const { x1, y1, x2, y2 } = resizedCoordinates(clientX, clientY, position, coordinates);
-      updateElement(id, x1, y1, x2, y2, type);
+      updateElement(id, x1, y1, x2, y2, type, options);
     }
   };
 
@@ -343,10 +362,10 @@ const App = () => {
       }
 
       const index = selectedElement.id;
-      const { id, type } = elements[index];
+      const { id, type, options } = elements[index];
       if ((action === "drawing" || action === "resizing") && adjustmentRequired(type)) {
         const { x1, y1, x2, y2 } = adjustElementCoordinates(elements[index]);
-        updateElement(id, x1, y1, x2, y2, type);
+        updateElement(id, x1, y1, x2, y2, type, options);
       }
     }
 
@@ -395,6 +414,20 @@ const App = () => {
       <div style={{ position: "fixed", bottom: 0, padding: 10 }}>
         <button onClick={undo}>Undo</button>
         <button onClick={redo}>Redo</button>
+        <div style={{ display: "inline-block", marginLeft: "2rem" }}>
+          <label>
+            Red
+            <input type="radio" checked={color === "red"} onChange={() => setColor("red")} />
+          </label>
+          <label>
+            Green
+            <input type="radio" checked={color === "green"} onChange={() => setColor("green")} />
+          </label>
+          <label>
+            Blue
+            <input type="radio" checked={color === "blue"} onChange={() => setColor("blue")} />
+          </label>
+        </div>
       </div>
       {action === "writing" ? (
         <textarea
