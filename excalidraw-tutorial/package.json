@@ -6,11 +6,11 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
-    "perfect-freehand": "^0.4.10",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1",
-    "roughjs": "^4.3.1"
+    "perfect-freehand": "^1.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "^5.0.1",
+    "roughjs": "^4.5.2"
   },
   "scripts": {
     "start": "react-scripts start",
