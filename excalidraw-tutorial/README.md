@@ -42,4 +42,12 @@ MDN Docs Text: https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutor
 
 MDN Docs Measure Text: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/measureText
 
+**Part 7 (Pan Tool):**
 
+YouTube Tutorial: https://youtu.be/htfM0RAqdxc
+
+MDN Docs Translate: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/translate
+
+MDN Context Save: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/save
+
+MDN Context Restore: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/restore
